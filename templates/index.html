@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link type="text/css" href="{{ url_for('static', filename='style1.css')}}" rel="stylesheet" />
+    <title>Document</title>
+</head>
+<body>
+    <div class="container">
+        <form class="container-forms" action="#" id="yourForm">
+            <div class="task-topic">Создание задачи</div>
+            <div class="input-box">
+                <input maxlength="90" class="input-box name-task validate-input" type="text" name="" id="name-task-id" placeholder="Наименование задачи..." required>
+                <div class="counter-name">
+                    <span class="current-name">0</span>&nbsp;/
+                    <span class="total">90</span>
+                </div>
+            </div>
+            <div class="input-box task-box">
+                <textarea maxlength="250" class="task-box-text validate-input" name="" id="" cols="30" rows="10" placeholder="Описание задачи..." required></textarea>
+                <div class="counter-task-box">
+                    <span class="current">0</span>&nbsp;/
+                    <span class="total">250</span>
+                </div>
+            </div>
+            <div class="input-box task-date">
+                <label for="date-task" class="date-description">Дата выполнения:</label>
+                <input type="date" class="date-style validate-input" name="date-term" id="date-task" required>
+            </div>
+            <div class="input-box priority-task selected">
+                <div class="prority-topic">Выберите приоритет:</div>
+                <div class="radio-priority">
+                    <input type="radio" name="prority" id="ordinary" require><label for="ordinary" class="priority-description">Обычный</label>
+                    <input type="radio" name="prority" id="average" required><label for="average" class="priority-description">Средний</label>
+                    <input type="radio" name="prority" id="urgent" required><label for="urgent" class="priority-description">Срочный</label>
+                </div>
+            </div>
+            <div class="input-box notifications">
+                <div class="notify-div">
+                    <label class="checkbox" for="checkbox">
+                        <input class="checkbox-inp" type="checkbox" name="" id="checkbox">
+                        <span class="checkbox-inner">Уведомления:</span>
+                    </label>
+                </div>
+                <div class="not-id">
+                    <div class="notifications-div">
+                        <input type="radio" name="choice-notify" id="daily"><label for="daily" class="notify-description">Каждый день</label>
+                        <label for="daily-time" class="daily-time-description">в:</label>
+                        <input class="times" type="time" name="daily-time" id="daily-time">
+                        <label for="daily-time" class="daily-time-msk-description">мск</label>
+                    </div>
+                    <div class="notifications-div">
+                        <input type="radio" name="choice-notify" id="once"><label for="once" class="notify-description">В выбранный день</label>
+                        <label for="once-time" class="once-date-description">в:</label>
+                        <input class="times" type="time" name="once" id="once-time">
+                        <label for="once-time" class="once-time-msk-description">мск</label>
+                    </div>
+                </div>
+            </div>
+            <div class="input-box button-submit">
+                <button class="btn-submit" id="button" type="submit">Создать задачу</button>
+            </div>
+        </form>
+
+    </div>
+    <script src="static/scripts.js"></script>
+</body>
+</html>
