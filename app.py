@@ -30,6 +30,7 @@ app.secret_key = 'secret_key'  # не забыть поменять на бол�
 #     return render_template("form.html")
 
 
+# это новая настройка проекта
 @app.route("/", methods=["GET", "POST"])
 def index():
     return render_template("index.html")
