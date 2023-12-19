@@ -30,7 +30,7 @@ app.secret_key = 'secret_key'  # не забыть поменять на бол�
 #             print("Ошибка добавления записей в БД")
 #
 #     return render_template("form.html")
-
+print('hello')
 @app.route("/", methods=["GET", "POST"])
 def index():
     return render_template("index.html")
