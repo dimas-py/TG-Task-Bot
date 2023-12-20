@@ -4,13 +4,15 @@ function submitForm(event) {
             // Получаем значения полей формы
             let taskName = document.getElementById("name-task-id").value;
             let taskDescription = document.getElementById("taskDescription").value;
+            let taskDate = document.getElementById("date-task").value;
             let userId = document.getElementById("user_id").value;
 
             // Создаем объект JSON
             let jsonData = {
                 taskName: taskName,
                 taskDescription: taskDescription,
-                user_id: userId
+                user_id: userId,
+                taskDate: taskDate
             };
 
             // отладка

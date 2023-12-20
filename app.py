@@ -15,11 +15,16 @@ def index():
         try:
             task_name = request.json.get('taskName')
             task_description = request.json.get('taskDescription')
+            date_term = request.json.get('taskDate')
+            # print(task_name)
+            # print(task_description)
+            # print(date_term)
 
             # Получаем user_id из сессии
             user_id = session.get('user_id')
+            # print(user_id)
             sessions = Session()
-            new_task = Task(task_name=task_name, task_description=task_description, task_user_id=user_id)
+            new_task = Task(task_user_id=user_id, task_name=task_name, task_description=task_description, date_term=date_term)
             sessions.add(new_task)
             sessions.commit()
         except Exception as e:
