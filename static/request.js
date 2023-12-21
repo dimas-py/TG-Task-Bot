@@ -7,12 +7,24 @@ function submitForm(event) {
             let taskDate = document.getElementById("date-task").value;
             let userId = document.getElementById("user_id").value;
 
+            // Получаем приоритет задачи
+            let ordinary = document.getElementById("ordinary").checked;
+            let average = document.getElementById("average").checked;
+            let urgent = document.getElementById("urgent").checked;
+
+            // Получаем информацию об уведомлениях
+            let notification = document.getElementById("checkbox").checked;
+
             // Создаем объект JSON
             let jsonData = {
                 taskName: taskName,
                 taskDescription: taskDescription,
                 user_id: userId,
-                taskDate: taskDate
+                taskDate: taskDate,
+                ordinary: ordinary,
+                average: average,
+                urgent: urgent,
+                notification: notification
             };
 
             // отладка

@@ -9,7 +9,7 @@ from bd_config import User, Session
 
 
 BOT_TOKEN = "6481132072:AAEcFRg5bH9eEgzUXHMdyzOkdTHClDAqrfw"
-FLASK_URL = 'https://7e51-94-231-133-134.ngrok-free.app'
+FLASK_URL = 'https://99d0-94-231-133-134.ngrok-free.app'
 bot = Bot(BOT_TOKEN, parse_mode="HTML")
 dp = Dispatcher()
 

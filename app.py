@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, session
+from flask import Flask, render_template, request, session, jsonify
 from bd_config import Task, Session
 
 app = Flask(__name__)
@@ -13,22 +13,29 @@ def index():
         return render_template("index.html", user_id=user_id)
     if request.method == "POST":
         try:
+            user_id = session.get('user_id')  # Получаем user_id из сессии
             task_name = request.json.get('taskName')
             task_description = request.json.get('taskDescription')
             date_term = request.json.get('taskDate')
-            # print(task_name)
-            # print(task_description)
-            # print(date_term)
 
-            # Получаем user_id из сессии
-            user_id = session.get('user_id')
-            # print(user_id)
-            sessions = Session()
-            new_task = Task(task_user_id=user_id, task_name=task_name, task_description=task_description, date_term=date_term)
-            sessions.add(new_task)
-            sessions.commit()
+            # Получаем приоритет задачи
+            priority_ordinary = 'ordinary' if request.json.get('ordinary') else False
+            priority_average = 'average' if request.json.get('average') else False
+            priority_urgent = 'urgent' if request.json.get('urgent') else False
+            priority_task = next((i for i in [priority_ordinary, priority_average, priority_urgent] if i), None)
+
+            notification = request.json.get('notification')  # Получаем состояние уведомления
+
+            sessions_bd = Session()
+            new_task = Task(task_user_id=user_id,
+                            task_name=task_name,
+                            task_description=task_description,
+                            date_term=date_term,
+                            task_priority=priority_task,
+                            notification=notification)
+            sessions_bd.add(new_task)
+            sessions_bd.commit()
         except Exception as e:
-            sessions.rollback()
             print(f"Error {e}")
             print("Ошибка добавления записей в БД")
 

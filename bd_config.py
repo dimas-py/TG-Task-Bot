@@ -1,4 +1,4 @@
-from sqlalchemy import create_engine, String, BigInteger, Date
+from sqlalchemy import create_engine, String, BigInteger, Date, Boolean
 from sqlalchemy.orm import DeclarativeBase, sessionmaker, Mapped, mapped_column
 
 engine = create_engine('mysql+mysqlconnector://root:root@localhost:3306/tgbot', echo=True)
@@ -25,6 +25,8 @@ class Task(Base):
     task_name: Mapped[str] = mapped_column(String(255))
     task_description: Mapped[str] = mapped_column(String(255))
     date_term: Mapped[Date] = mapped_column(Date)
+    task_priority: Mapped[str] = mapped_column(String(255))
+    notification: Mapped[bool] = mapped_column(Boolean)
 
 
 # def create_tables():
