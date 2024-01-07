@@ -1,4 +1,4 @@
-from sqlalchemy import create_engine, String, BigInteger, Date, Boolean
+from sqlalchemy import create_engine, ForeignKey, String, BigInteger, Date, Time, Boolean
 from sqlalchemy.orm import DeclarativeBase, sessionmaker, Mapped, mapped_column
 
 engine = create_engine('mysql+mysqlconnector://root:root@localhost:3306/tgbot', echo=True)
@@ -27,6 +27,15 @@ class Task(Base):
     date_term: Mapped[Date] = mapped_column(Date)
     task_priority: Mapped[str] = mapped_column(String(255))
     notification: Mapped[bool] = mapped_column(Boolean)
+
+
+class Notifications(Base):
+    __tablename__ = 'notifications'
+
+    id: Mapped[int] = mapped_column(primary_key=True)
+    task_id: Mapped[int] = mapped_column(ForeignKey("tasks.id"))
+    notify_type: Mapped[str] = mapped_column(String(255))
+    notify_time: Mapped[Time] = mapped_column(Time)
 
 
 # def create_tables():

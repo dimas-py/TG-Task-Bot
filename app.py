@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, session, jsonify
-from bd_config import Task, Session
+from bd_config import Task, Notifications, Session
 
 app = Flask(__name__)
 app.secret_key = 'secret_key'  # не забыть поменять на более сложный
@@ -34,6 +34,22 @@ def index():
                             task_priority=priority_task,
                             notification=notification)
             sessions_bd.add(new_task)
+            sessions_bd.flush()
+
+            # Сохраняем выбранные параметры уведомлений в БД
+            if notification:
+                notify_daily = request.json.get('notify_daily')
+                notify_once = request.json.get('notify_once')
+                daily_time = request.json.get('daily_time')
+                once_time = request.json.get('once_time')
+
+                if notify_daily:
+                    new_notify = Notifications(task_id=new_task.id, notify_type='daily', notify_time=daily_time)
+                    sessions_bd.add(new_notify)
+                elif notify_once:
+                    new_notify = Notifications(task_id=new_task.id, notify_type='once', notify_time=once_time)
+                    sessions_bd.add(new_notify)
+
             sessions_bd.commit()
         except Exception as e:
             print(f"Error {e}")
