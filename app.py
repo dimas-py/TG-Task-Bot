@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, session, jsonify
-from bd_config import Task, Notifications, Session
+from bd_config import Task, Session
 
 app = Flask(__name__)
 app.secret_key = 'secret_key'  # не забыть поменять на более сложный
@@ -44,10 +44,24 @@ def index():
                 once_time = request.json.get('once_time')
 
                 if notify_daily:
-                    new_notify = Notifications(task_id=new_task.id, notify_type='daily', notify_time=daily_time)
+                    new_notify = Task(task_user_id=user_id,
+                                      task_name=task_name,
+                                      task_description=task_description,
+                                      date_term=date_term,
+                                      task_priority=priority_task,
+                                      notification=notification,
+                                      notify_type='daily',
+                                      notify_time=daily_time)
                     sessions_bd.add(new_notify)
                 elif notify_once:
-                    new_notify = Notifications(task_id=new_task.id, notify_type='once', notify_time=once_time)
+                    new_notify = Task(task_user_id=user_id,
+                                      task_name=task_name,
+                                      task_description=task_description,
+                                      date_term=date_term,
+                                      task_priority=priority_task,
+                                      notification=notification,
+                                      notify_type='once',
+                                      notify_time=once_time)
                     sessions_bd.add(new_notify)
 
             sessions_bd.commit()

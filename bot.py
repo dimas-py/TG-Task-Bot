@@ -1,15 +1,16 @@
 import asyncio
 
+from datetime import time
 from aiogram import Bot, Dispatcher
 from aiogram.filters import CommandStart
+from aiogram.filters.command import Command
 from aiogram.types import Message
 
+from bd_config import User, Session, Task
 from keyboard import create_main_keyboard
-from bd_config import User, Session
-
 
 BOT_TOKEN = "6481132072:AAEcFRg5bH9eEgzUXHMdyzOkdTHClDAqrfw"
-FLASK_URL = 'https://9226-94-231-133-134.ngrok-free.app'
+FLASK_URL = 'https://0bc1-94-231-133-134.ngrok-free.app'
 bot = Bot(BOT_TOKEN, parse_mode="HTML")
 dp = Dispatcher()
 
@@ -29,6 +30,36 @@ async def start(message: Message):
         await message.reply("Вы уже наш чел!👌")
 
     await message.answer(f'Привет, {first_name}!😘', reply_markup=main_kb)
+
+
+@dp.message(Command("test"))
+async def cmd_test(message: Message):
+    user_id = message.from_user.id
+    session = Session()
+    tasks = (session.query(Task.task_name,
+                           Task.task_description,
+                           Task.date_term,
+                           Task.task_priority,
+                           Task.notification,
+                           Task.notify_type,
+                           Task.notify_time)
+             .filter_by(task_user_id=user_id).all())
+
+    tasks_result = [{'task_name': task_name,
+                     'task_description': task_description,
+                     'date_term': f'{date_term.year}, {date_term.month}, {date_term.day}',
+                     'task_priority': task_priority,
+                     'notification': notification,
+                     'notify_type': notify_type,
+                     'notify_time': f'{notify_time.strftime("%H:%M") if notify_time else None}'}
+
+                    for task_name, task_description,
+                    date_term, task_priority,
+                    notification, notify_type,
+                    notify_time in tasks]
+
+    await message.answer(f'{tasks_result}')
+    print(tasks_result)
 
 
 # Функция для проверки существования пользователя в базе данных

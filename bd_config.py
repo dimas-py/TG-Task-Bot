@@ -27,15 +27,17 @@ class Task(Base):
     date_term: Mapped[Date] = mapped_column(Date)
     task_priority: Mapped[str] = mapped_column(String(255))
     notification: Mapped[bool] = mapped_column(Boolean)
+    notify_type: Mapped[str] = mapped_column(String(255), nullable=True)
+    notify_time: Mapped[Time] = mapped_column(Time, nullable=True)
 
 
-class Notifications(Base):
-    __tablename__ = 'notifications'
-
-    id: Mapped[int] = mapped_column(primary_key=True)
-    task_id: Mapped[int] = mapped_column(ForeignKey("tasks.id"))
-    notify_type: Mapped[str] = mapped_column(String(255))
-    notify_time: Mapped[Time] = mapped_column(Time)
+# class Notifications(Base):
+#     __tablename__ = 'notifications'
+#
+#     id: Mapped[int] = mapped_column(primary_key=True)
+#     notify_user_id: Mapped[int] = mapped_column(BigInteger)
+#     notify_type: Mapped[str] = mapped_column(String(255))
+#     notify_time: Mapped[Time] = mapped_column(Time)
 
 
 # def create_tables():
