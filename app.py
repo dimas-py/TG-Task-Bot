@@ -1,7 +1,9 @@
 from flask import Flask, render_template, request, session, jsonify
 from bd_config import Task, Session
+from flask_cors import CORS  # Импортируем CORS
 
 app = Flask(__name__)
+CORS(app)
 app.secret_key = 'secret_key'  # не забыть поменять на более сложный
 
 
@@ -71,6 +73,36 @@ def index():
 
     return render_template("index.html")
 
+
+@app.route('/get_tasks', methods=["GET", "POST"])
+def web_app():
+    user_id = request.args.get('user_id')
+    session['user_id'] = user_id
+    print(user_id)
+
+    sessions = Session()
+    tasks = (sessions.query(Task.task_name,
+                           Task.task_description,
+                           Task.date_term,
+                           Task.task_priority,
+                           Task.notification,
+                           Task.notify_type,
+                           Task.notify_time)
+             .filter_by(task_user_id=user_id).all())
+
+    tasks_result = [{'task_name': task_name,
+                     'task_description': task_description,
+                     'date_term': f'{date_term.year}, {date_term.month}, {date_term.day}',
+                     'task_priority': task_priority,
+                     'notification': notification,
+                     'notify_type': notify_type,
+                     'notify_time': f'{notify_time.strftime("%H:%M") if notify_time else None}'}
+
+                    for task_name, task_description,
+                    date_term, task_priority,
+                    notification, notify_type,
+                    notify_time in tasks]
+    return render_template('tasks.html', tasks_result=tasks_result)
 
 if __name__ == "__main__":
     app.run(debug=True)
