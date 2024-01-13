@@ -3,15 +3,57 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your Web App</title>
+    <title>Your Web Page</title>
+    <link type="text/css" href="{{ url_for('static', filename='tasks.css')}}" rel="stylesheet" />
 </head>
 <body>
-    <input type="hidden" id="user_id" name="user_id" value="{{ user_id }}" >
-    <h1>Data from Database</h1>
-    <ul>
-        {% for data_item in tasks_result %}
-            <li>{{ data_item }}</li>
-        {% endfor %}
-    </ul>
+    <div id="jsonContainer" data-tasks='{{ tasks_json | tojson | safe }}'></div>
+
+    <script>
+        // Извлекаем JSON-данные из атрибута data-tasks
+        let tasksData = JSON.parse(document.getElementById('jsonContainer').getAttribute('data-tasks'));
+
+        // Функция для создания блока и добавления его на страницу
+        function addJsonBlock(taskData) {
+            let container = document.getElementById('jsonContainer');
+            let jsonBlock = document.createElement('div');
+            jsonBlock.className = 'jsonBlock';
+
+            // Отображение названия задачи
+            jsonBlock.innerHTML += '<div class="detailBlock taskName"><strong>Название задачи</strong><br>' + taskData.task_name + '</div>';
+
+            // Отображение описания задачи
+            jsonBlock.innerHTML += '<div class="detailBlock taskDescription"><strong>Описание задачи</strong><br>' + taskData.task_description + '</div>';
+
+            // Отображение даты выполнения
+            let dateTerm = new Date(taskData.date_term);
+            jsonBlock.innerHTML += '<div class="detailBlock taskDate"><strong>Дата выполнения</strong><br>' + dateTerm.toLocaleDateString() + '</div>';
+
+            // Отображение приоритета
+            let priorityMapping = {
+                'average': 'Средний',
+                'ordinary': 'Обычный',
+                'urgent': 'Срочный'
+            };
+            jsonBlock.innerHTML += '<div class="detailBlock taskPriority"><strong>Приоритет</strong><br>' + priorityMapping[taskData.task_priority] + '</div>';
+
+            // Отображение статуса уведомлений
+            jsonBlock.innerHTML += '<div class="detailBlock taskStatus"><strong>Статус уведомлений</strong><br>' + (taskData.notification ? 'Включены' : 'Выключены') + '</div>';
+
+            // Если уведомления включены, отображение типа уведомлений и времени
+            if (taskData.notification) {
+                if (taskData.notify_type === 'daily') {
+                    jsonBlock.innerHTML += '<div class="detailBlock dailyNotification"><strong>Уведомлять ежедневно</strong><br>в ' + taskData.notify_time + '</div>';
+                } else if (taskData.notify_type === 'once') {
+                    jsonBlock.innerHTML += '<div class="detailBlock onceNotification"><strong>Уведомить только</strong><br>' + dateTerm.toLocaleDateString() + ' в ' + taskData.notify_time + '</div>';
+                }
+            }
+
+            container.appendChild(jsonBlock);
+        }
+
+        // Вызываем функцию для каждого объекта в массиве JSON данных
+        tasksData.forEach(addJsonBlock);
+    </script>
 </body>
 </html>

@@ -1,0 +1,42 @@
+.jsonBlock {
+    border: 1px solid #ccc;
+    margin-bottom: 10px;
+    padding: 10px;
+    background-color: #f0f0f0;
+}
+
+/* Стилизация для каждого элемента JSON-объекта */
+.taskName {
+    color: blue;
+    /* Добавьте другие стили по вашему усмотрению */
+}
+
+.taskDescription {
+    font-style: italic;
+    /* Добавьте другие стили по вашему усмотрению */
+}
+
+.taskDate {
+    color: green;
+    /* Добавьте другие стили по вашему усмотрению */
+}
+
+.taskPriority {
+    font-weight: bold;
+    /* Добавьте другие стили по вашему усмотрению */
+}
+
+.taskStatus {
+    color: red;
+    /* Добавьте другие стили по вашему усмотрению */
+}
+
+.dailyNotification {
+    background-color: yellow;
+    /* Добавьте другие стили по вашему усмотрению */
+}
+
+.onceNotification {
+    background-color: orange;
+    /* Добавьте другие стили по вашему усмотрению */
+}

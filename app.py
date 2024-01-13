@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, session, jsonify
 from bd_config import Task, Session
-from flask_cors import CORS  # Импортируем CORS
+from flask_cors import CORS
 
 app = Flask(__name__)
 CORS(app)
@@ -75,19 +75,19 @@ def index():
 
 
 @app.route('/get_tasks', methods=["GET", "POST"])
-def web_app():
+def get_tasks():
     user_id = request.args.get('user_id')
     session['user_id'] = user_id
     print(user_id)
 
     sessions = Session()
     tasks = (sessions.query(Task.task_name,
-                           Task.task_description,
-                           Task.date_term,
-                           Task.task_priority,
-                           Task.notification,
-                           Task.notify_type,
-                           Task.notify_time)
+                            Task.task_description,
+                            Task.date_term,
+                            Task.task_priority,
+                            Task.notification,
+                            Task.notify_type,
+                            Task.notify_time)
              .filter_by(task_user_id=user_id).all())
 
     tasks_result = [{'task_name': task_name,
@@ -102,7 +102,8 @@ def web_app():
                     date_term, task_priority,
                     notification, notify_type,
                     notify_time in tasks]
-    return render_template('tasks.html', tasks_result=tasks_result)
+
+    return render_template("tasks.html", tasks_json=tasks_result)
 
 if __name__ == "__main__":
     app.run(debug=True)
