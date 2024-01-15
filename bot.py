@@ -11,7 +11,7 @@ from bd_config import User, Session, Task
 from keyboard import create_main_keyboard
 
 BOT_TOKEN = "6481132072:AAEcFRg5bH9eEgzUXHMdyzOkdTHClDAqrfw"
-FLASK_URL = 'https://d74e-94-231-133-134.ngrok-free.app'
+FLASK_URL = 'https://16ba-94-231-133-134.ngrok-free.app'
 bot = Bot(BOT_TOKEN, parse_mode="HTML")
 dp = Dispatcher()
 

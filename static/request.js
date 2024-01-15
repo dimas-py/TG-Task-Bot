@@ -49,4 +49,10 @@ function submitForm(event) {
             .then(response => response.json())
             .then(data => console.log(data))
             .catch(error => console.error('Error:', error));
+
+            // Закрытие окна приложения, после нажатия "Создать задачу"
+            setTimeout(() => {
+                let tg = window.Telegram.WebApp;
+                tg.close();
+            }, 1000); // где 1000, ждать 1 секунду
         }

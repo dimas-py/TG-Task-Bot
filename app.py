@@ -7,6 +7,7 @@ CORS(app)
 app.secret_key = 'secret_key'  # не забыть поменять на более сложный
 
 
+# Создание задач
 @app.route("/", methods=["GET", "POST"])
 def index():
     if request.method == "GET":
@@ -74,6 +75,7 @@ def index():
     return render_template("index.html")
 
 
+# Получение списка задач
 @app.route('/get_tasks', methods=["GET", "POST"])
 def get_tasks():
     user_id = request.args.get('user_id')
@@ -81,7 +83,8 @@ def get_tasks():
     print(user_id)
 
     sessions = Session()
-    tasks = (sessions.query(Task.task_name,
+    tasks = (sessions.query(Task.id,
+                            Task.task_name,
                             Task.task_description,
                             Task.date_term,
                             Task.task_priority,
@@ -90,7 +93,8 @@ def get_tasks():
                             Task.notify_time)
              .filter_by(task_user_id=user_id).all())
 
-    tasks_result = [{'task_name': task_name,
+    tasks_result = [{'task_id': task_id,
+                     'task_name': task_name,
                      'task_description': task_description,
                      'date_term': f'{date_term.year}, {date_term.month}, {date_term.day}',
                      'task_priority': task_priority,
@@ -98,12 +102,20 @@ def get_tasks():
                      'notify_type': notify_type,
                      'notify_time': f'{notify_time.strftime("%H:%M") if notify_time else None}'}
 
-                    for task_name, task_description,
+                    for task_id, task_name, task_description,
                     date_term, task_priority,
                     notification, notify_type,
                     notify_time in tasks]
 
     return render_template("tasks.html", tasks_json=tasks_result)
+
+
+# Удаление задач
+@app.route('/delete_task', methods=['POST'])
+def delete_task():
+    deleted_task = request.json.get('deletedTask')
+    print('Deleted Task:', deleted_task)
+    return jsonify({'status': 'success'})
 
 if __name__ == "__main__":
     app.run(debug=True)
