@@ -1,3 +1,6 @@
+let tg = window.Telegram.WebApp; //получаем объект webapp телеграма
+tg.expand(); //расширяем на все окно
+
 let now = new Date();
 let month = now.getMonth() + 1;
 let year = now.getFullYear();

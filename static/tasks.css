@@ -49,3 +49,12 @@ body {
 .notificationEnabled {
     color: green;
 }
+
+.noTasksText {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #FFFF00;
+    font-size: 40px;
+    height: 80vh;
+}

@@ -36,37 +36,24 @@ def index():
                             date_term=date_term,
                             task_priority=priority_task,
                             notification=notification)
-            sessions_bd.add(new_task)
-            sessions_bd.flush()
 
             # Сохраняем выбранные параметры уведомлений в БД
             if notification:
-                notify_daily = request.json.get('notify_daily')
-                notify_once = request.json.get('notify_once')
-                daily_time = request.json.get('daily_time')
-                once_time = request.json.get('once_time')
+                notify_type = None
+                notify_time = None
 
-                if notify_daily:
-                    new_notify = Task(task_user_id=user_id,
-                                      task_name=task_name,
-                                      task_description=task_description,
-                                      date_term=date_term,
-                                      task_priority=priority_task,
-                                      notification=notification,
-                                      notify_type='daily',
-                                      notify_time=daily_time)
-                    sessions_bd.add(new_notify)
-                elif notify_once:
-                    new_notify = Task(task_user_id=user_id,
-                                      task_name=task_name,
-                                      task_description=task_description,
-                                      date_term=date_term,
-                                      task_priority=priority_task,
-                                      notification=notification,
-                                      notify_type='once',
-                                      notify_time=once_time)
-                    sessions_bd.add(new_notify)
+                if request.json.get('notify_daily'):
+                    notify_type = 'daily'
+                    notify_time = request.json.get('daily_time')
+                elif request.json.get('notify_once'):
+                    notify_type = 'once'
+                    notify_time = request.json.get('once_time')
 
+                if notify_type and notify_time:
+                    new_task.notify_type = notify_type
+                    new_task.notify_time = notify_time
+
+            sessions_bd.add(new_task)
             sessions_bd.commit()
         except Exception as e:
             print(f"Error {e}")
@@ -113,8 +100,12 @@ def get_tasks():
 # Удаление задач
 @app.route('/delete_task', methods=['POST'])
 def delete_task():
-    deleted_task = request.json.get('deletedTask')
-    print('Deleted Task:', deleted_task)
+    get_task = request.json.get('deletedTask')['task_id']
+
+    sessions = Session()
+    del_task = sessions.query(Task).get(get_task)
+    sessions.delete(del_task)
+    sessions.commit()
     return jsonify({'status': 'success'})
 
 if __name__ == "__main__":

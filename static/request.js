@@ -53,6 +53,6 @@ function submitForm(event) {
             // Закрытие окна приложения, после нажатия "Создать задачу"
             setTimeout(() => {
                 let tg = window.Telegram.WebApp;
-                tg.close();
-            }, 1000); // где 1000, ждать 1 секунду
+                tg.sendData(taskName);
+            }, 300); // где 1000, ждать 1 секунду
         }

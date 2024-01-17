@@ -8,8 +8,11 @@
 </head>
 <body>
     <div id="jsonContainer" data-tasks='{{ tasks_json | tojson | safe }}'></div>
-
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <script>
+        let tg = window.Telegram.WebApp; //получаем объект webapp телеграма
+        tg.expand(); //расширяем на все окно
+
         // Извлекаем JSON-данные из атрибута data-tasks
         var tasksData = JSON.parse(document.getElementById('jsonContainer').getAttribute('data-tasks'));
 
@@ -91,15 +94,21 @@
         }
 
         // Обновление инфы на странице после удаления задачи
-        function updateView() {
+         function updateView() {
             var container = document.getElementById('jsonContainer');
-            container.innerHTML = ''; // Очищаем контейнер
+            container.innerHTML = '';
 
-            tasksData.forEach(addJsonBlock); // Вызываем функцию для каждой задачи в обновленном массиве
+            if (tasksData.length === 0) {
+                var noTasksText = document.createElement('p');
+                noTasksText.textContent = 'Задач нет';
+                noTasksText.className = 'noTasksText'; // Добавьте класс для стилизации в CSS
+                container.appendChild(noTasksText);
+            } else {
+                tasksData.forEach(addJsonBlock);
+            }
         }
 
-        // Вызываем функцию для каждого объекта в массиве JSON данных
-        tasksData.forEach(addJsonBlock);
+        updateView();
     </script>
 </body>
 </html>
