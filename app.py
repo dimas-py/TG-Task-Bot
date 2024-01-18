@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, session, jsonify
-from bd_config import Task, Session
+from bd_config import Task, Session, DoneTask
 from flask_cors import CORS
 
 app = Flask(__name__)
@@ -97,16 +97,82 @@ def get_tasks():
     return render_template("tasks.html", tasks_json=tasks_result)
 
 
-# Удаление задач
-@app.route('/delete_task', methods=['POST'])
-def delete_task():
-    get_task = request.json.get('deletedTask')['task_id']
+# Выполненные задачи
+@app.route('/done_task', methods=['POST', 'GET'])
+def done_task():
+    if request.method == 'POST':
+        get_task = request.json.get('deletedTask')['task_id']
+        sessions = Session()
+        del_task = sessions.query(Task).get(get_task)
+        done_tasks = DoneTask(
+            task_user_id=del_task.task_user_id,
+            task_name=del_task.task_name,
+            task_description=del_task.task_description,
+            date_term=del_task.date_term,
+            task_priority=del_task.task_priority,
+            notification=del_task.notification,
+            notify_type=del_task.notify_type,
+            notify_time=del_task.notify_time
+        )
 
-    sessions = Session()
-    del_task = sessions.query(Task).get(get_task)
-    sessions.delete(del_task)
-    sessions.commit()
-    return jsonify({'status': 'success'})
+        sessions.add(done_tasks)
+        sessions.delete(del_task)
+        sessions.commit()
+        return jsonify({'status': 'success'})
+
+    if request.method == 'GET':
+        user_id = request.args.get('user_id')
+        session['user_id'] = user_id
+
+        sessions = Session()
+        tasks = (sessions.query(DoneTask.id,
+                                DoneTask.task_name,
+                                DoneTask.task_description,
+                                DoneTask.date_term,
+                                DoneTask.task_priority,
+                                DoneTask.notification,
+                                DoneTask.notify_type,
+                                DoneTask.notify_time)
+                 .filter_by(task_user_id=user_id).all())
+
+        tasks_result = [{'task_id': task_id,
+                         'task_name': task_name,
+                         'task_description': task_description,
+                         'date_term': f'{date_term.year}, {date_term.month}, {date_term.day}',
+                         'task_priority': task_priority,
+                         'notification': notification,
+                         'notify_type': notify_type,
+                         'notify_time': f'{notify_time.strftime("%H:%M") if notify_time else None}'}
+
+                        for task_id, task_name, task_description,
+                        date_term, task_priority,
+                        notification, notify_type,
+                        notify_time in tasks]
+
+        return render_template("done_tasks.html", tasks_json=tasks_result)
+
+
+@app.route('/clear_done_task', methods=['POST'])
+def clear_done_task():
+    data = request.get_json()
+
+    if data and data.get('cleared'):
+        # Получаем массив удаленных задач из JSON
+        deleted_tasks = data.get('deletedTasks', [])
+
+        sessions = Session()
+        for task_data in deleted_tasks:
+            task_id = task_data.get('task_id')
+            task = sessions.query(DoneTask).filter(DoneTask.id == task_id).first()
+            sessions.delete(task)
+
+        sessions.commit()
+
+        return jsonify({'status': 'success', 'deletedTasks': deleted_tasks})
+    else:
+        return jsonify({'status': 'error', 'error': 'Invalid request'})
+
+
 
 if __name__ == "__main__":
     app.run(debug=True)

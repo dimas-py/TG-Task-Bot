@@ -14,13 +14,7 @@ def create_main_keyboard(user_id, FLASK_URL):
             ],
             [
                 KeyboardButton(text="Актуальные задачи", web_app=WebAppInfo(url=f'{FLASK_URL}/get_tasks?user_id={user_id}')),
-                KeyboardButton(text="Выполненные задачи"),
-            ],
-            [
-                KeyboardButton(text="Корзина")
-            ],
-            [
-                KeyboardButton(text="Тест")
+                KeyboardButton(text="Выполненные задачи", web_app=WebAppInfo(url=f'{FLASK_URL}/done_task?user_id={user_id}'))
             ]
         ],
         resize_keyboard=True,  # маленькая клава

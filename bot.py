@@ -1,17 +1,13 @@
 import asyncio
-import requests
-import time
-from datetime import time
 from aiogram import Bot, Dispatcher
 from aiogram.filters import CommandStart
-from aiogram.filters.command import Command
 from aiogram.types import Message
 
-from bd_config import User, Session, Task
+from bd_config import User, Session
 from keyboard import create_main_keyboard
 
 BOT_TOKEN = "6481132072:AAEcFRg5bH9eEgzUXHMdyzOkdTHClDAqrfw"
-FLASK_URL = 'https://d664-94-231-133-134.ngrok-free.app'
+FLASK_URL = 'https://9959-94-231-133-134.ngrok-free.app'
 bot = Bot(BOT_TOKEN, parse_mode="HTML")
 dp = Dispatcher()
 
