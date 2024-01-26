@@ -27,7 +27,6 @@ class Task(Base):
     date_term: Mapped[Date] = mapped_column(Date)
     task_priority: Mapped[str] = mapped_column(String(255))
     notification: Mapped[bool] = mapped_column(Boolean)
-    notify_type: Mapped[str] = mapped_column(String(255), nullable=True)
     notify_time: Mapped[Time] = mapped_column(Time, nullable=True)
 
 
@@ -41,7 +40,6 @@ class DoneTask(Base):
     date_term: Mapped[Date] = mapped_column(Date)
     task_priority: Mapped[str] = mapped_column(String(255))
     notification: Mapped[bool] = mapped_column(Boolean)
-    notify_type: Mapped[str] = mapped_column(String(255), nullable=True)
     notify_time: Mapped[Time] = mapped_column(Time, nullable=True)
 
 

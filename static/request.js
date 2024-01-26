@@ -14,9 +14,6 @@ function submitForm(event) {
 
             // Получаем информацию об уведомлениях
             let notification = document.getElementById("checkbox").checked;
-            let notify_daily = document.getElementById("daily").checked;
-            let notify_once = document.getElementById("once").checked;
-            let daily_time = document.getElementById('daily-time').value
             let once_time = document.getElementById('once-time').value
 
             // Создаем объект JSON
@@ -29,9 +26,6 @@ function submitForm(event) {
                 average: average,
                 urgent: urgent,
                 notification: notification,
-                notify_daily: notify_daily,
-                notify_once: notify_once,
-                daily_time: daily_time,
                 once_time: once_time
             };
 

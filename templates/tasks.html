@@ -10,7 +10,7 @@
     <div id="jsonContainer" data-tasks='{{ tasks_json | tojson | safe }}'></div>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <script>
-        let tg = window.Telegram.WebApp; //получаем объект webapp телеграма
+        let tg = window.Telegram.WebApp; //получаем объект webapp телеграмма
         tg.expand(); //расширяем на все окно
 
         // Извлекаем JSON-данные из атрибута data-tasks
@@ -23,10 +23,10 @@
             jsonBlock.className = 'jsonBlock'; // Общий класс для всех элементов JSON
 
             // Отображение названия задачи
-            jsonBlock.innerHTML += '<div class="detailBlock taskNameContainer"><strong class="taskLabel">Название задачи:</strong><span class="taskValue">' + taskData.task_name + '</span></div>';
+            jsonBlock.innerHTML += '<div class="detailBlock taskNameContainer"><fieldset><legend class="taskLabel">Название задачи:</legend><span class="taskValue">' + taskData.task_name + '</span></fieldset></div>';
 
             // Отображение описания задачи
-            jsonBlock.innerHTML += '<div class="detailBlock taskDescriptionContainer"><strong class="taskLabel">Описание задачи:</strong><span class="taskValue">' + taskData.task_description + '</span></div>';
+            jsonBlock.innerHTML += '<div class="detailBlock taskDescriptionContainer"><fieldset><legend class="taskLabel">Описание задачи:</legend><span class="taskValue">' + taskData.task_description + '</span></fieldset></div>';
 
             // Отображение даты выполнения
             var dateTerm = new Date(taskData.date_term);
@@ -41,17 +41,13 @@
             jsonBlock.innerHTML += '<div class="detailBlock taskPriorityContainer"><strong class="taskLabel">Приоритет:</strong><span class="taskValue">' + priorityMapping[taskData.task_priority] + '</span></div>';
 
             // Отображение статуса уведомлений
-            jsonBlock.innerHTML += '<div class="detailBlock taskStatusContainer"><strong class="taskLabel">Статус уведомлений:</strong><span class="taskValue">' +
+            jsonBlock.innerHTML += '<div class="detailBlock taskStatusContainer"><strong class="taskLabel">Уведомления:</strong><span class="taskValue">' +
                 (taskData.notification ? '<span class="notificationEnabled">Включены</span>' : '<span class="notificationDisabled">Выключены</span>') +
                 '</span></div>';
 
-            // Если уведомления включены, отображение типа уведомлений и времени
+            // Если уведомления включены, отображать выбранное время уведомления
             if (taskData.notification) {
-                if (taskData.notify_type === 'daily') {
-                    jsonBlock.innerHTML += '<div class="detailBlock dailyNotificationContainer"><strong class="taskLabel">Уведомлять ежедневно:</strong><span class="taskValue">в ' + taskData.notify_time + '</span></div>';
-                } else if (taskData.notify_type === 'once') {
-                    jsonBlock.innerHTML += '<div class="detailBlock onceNotificationContainer"><strong class="taskLabel">Уведомить только:</strong><span class="taskValue">' + dateTerm.toLocaleDateString() + ' в ' + taskData.notify_time + '</span></div>';
-                }
+                jsonBlock.innerHTML += '<div class="detailBlock dailyNotificationContainer"><strong class="taskLabel">Напомнить:</strong><span class="taskValue">в ' + taskData.notify_time + '</span></div>';
             }
 
             // Добавление кнопки "Отметить как выполнено" с обработчиком события
@@ -100,7 +96,7 @@
 
             if (tasksData.length === 0) {
                 var noTasksText = document.createElement('p');
-                noTasksText.textContent = 'Задач нет';
+                noTasksText.textContent = 'Нет актуальных задач';
                 noTasksText.className = 'noTasksText'; // Добавьте класс для стилизации в CSS
                 container.appendChild(noTasksText);
             } else {

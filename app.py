@@ -39,19 +39,8 @@ def index():
 
             # Сохраняем выбранные параметры уведомлений в БД
             if notification:
-                notify_type = None
-                notify_time = None
-
-                if request.json.get('notify_daily'):
-                    notify_type = 'daily'
-                    notify_time = request.json.get('daily_time')
-                elif request.json.get('notify_once'):
-                    notify_type = 'once'
-                    notify_time = request.json.get('once_time')
-
-                if notify_type and notify_time:
-                    new_task.notify_type = notify_type
-                    new_task.notify_time = notify_time
+                notify_time = request.json.get('once_time')
+                new_task.notify_time = notify_time
 
             sessions_bd.add(new_task)
             sessions_bd.commit()
@@ -76,7 +65,6 @@ def get_tasks():
                             Task.date_term,
                             Task.task_priority,
                             Task.notification,
-                            Task.notify_type,
                             Task.notify_time)
              .filter_by(task_user_id=user_id).all())
 
@@ -86,12 +74,11 @@ def get_tasks():
                      'date_term': f'{date_term.year}, {date_term.month}, {date_term.day}',
                      'task_priority': task_priority,
                      'notification': notification,
-                     'notify_type': notify_type,
                      'notify_time': f'{notify_time.strftime("%H:%M") if notify_time else None}'}
 
                     for task_id, task_name, task_description,
                     date_term, task_priority,
-                    notification, notify_type,
+                    notification,
                     notify_time in tasks]
 
     return render_template("tasks.html", tasks_json=tasks_result)
@@ -111,7 +98,6 @@ def done_task():
             date_term=del_task.date_term,
             task_priority=del_task.task_priority,
             notification=del_task.notification,
-            notify_type=del_task.notify_type,
             notify_time=del_task.notify_time
         )
 
@@ -131,7 +117,6 @@ def done_task():
                                 DoneTask.date_term,
                                 DoneTask.task_priority,
                                 DoneTask.notification,
-                                DoneTask.notify_type,
                                 DoneTask.notify_time)
                  .filter_by(task_user_id=user_id).all())
 
@@ -141,12 +126,10 @@ def done_task():
                          'date_term': f'{date_term.year}, {date_term.month}, {date_term.day}',
                          'task_priority': task_priority,
                          'notification': notification,
-                         'notify_type': notify_type,
                          'notify_time': f'{notify_time.strftime("%H:%M") if notify_time else None}'}
 
                         for task_id, task_name, task_description,
-                        date_term, task_priority,
-                        notification, notify_type,
+                        date_term, task_priority, notification,
                         notify_time in tasks]
 
         return render_template("done_tasks.html", tasks_json=tasks_result)

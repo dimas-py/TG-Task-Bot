@@ -7,7 +7,6 @@ let year = now.getFullYear();
 let day = now.getDate();
 let mydate = year + '-' + month + '-' + day;
 document.getElementById('date-task').value = mydate;
-document.getElementById('daily-time').value = new Date().toTimeString().slice(0,5);
 document.getElementById('once-time').value = new Date().toTimeString().slice(0,5);
 
 
