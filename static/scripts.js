@@ -1,17 +1,20 @@
 let tg = window.Telegram.WebApp; //получаем объект webapp телеграма
 tg.expand(); //расширяем на все окно
 
-let now = new Date();
-let month = now.getMonth() + 1;
-let year = now.getFullYear();
-let day = now.getDate();
-let mydate = year + '-' + month + '-' + day;
-document.getElementById('date-task').value = mydate;
-document.getElementById('once-time').value = new Date().toTimeString().slice(0,5);
+
+document.getElementById('once-time').value = new Date().toTimeString().slice(0, 5);
+document.addEventListener('DOMContentLoaded', function () {
+    let now = new Date();
+    let month = now.getMonth() + 1;
+    let day = now.getDate();
+    let currentDate = now.getFullYear() + '-' + (month < 10 ? '0' : '') + month + '-' + (day < 10 ? '0' : '') + day;
+    document.getElementById('date-task').value = currentDate;
+    document.getElementById('date-task').min = currentDate;
+});
 
 
 const textarea = document.querySelector('textarea');
-const input_text = document.querySelector('input');
+const input_text = document.querySelector('.name-task');
 const counter = document.querySelector('.current');
 const counter_name = document.querySelector('.current-name');
 const div_counter_name = document.querySelector('.counter-name')
@@ -34,7 +37,7 @@ input_text.addEventListener('input', onInput_name)
 function onInput_name(event) {
 const counter_task_name_length = event.target.value.length;
 counter_name.textContent = counter_task_name_length;
-if (counter_task_name_length == 90) {
+if (counter_task_name_length == 30) {
     div_counter_name.style.color = '#bd4242'
 }else{
     div_counter_name.style.color = '#C8C8D2'

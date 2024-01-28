@@ -23,14 +23,14 @@
             jsonBlock.className = 'jsonBlock'; // Общий класс для всех элементов JSON
 
             // Отображение названия задачи
-            jsonBlock.innerHTML += '<div class="detailBlock taskNameContainer"><fieldset><legend class="taskLabel">Название задачи:</legend><span class="taskValue">' + taskData.task_name + '</span></fieldset></div>';
+            jsonBlock.innerHTML += '<div class="detailBlock taskNameContainer"><span class="taskNameValue">«' + taskData.task_name + '»</span></div>';
 
             // Отображение описания задачи
-            jsonBlock.innerHTML += '<div class="detailBlock taskDescriptionContainer"><fieldset><legend class="taskLabel">Описание задачи:</legend><span class="taskValue">' + taskData.task_description + '</span></fieldset></div>';
+            jsonBlock.innerHTML += '<div class="detailBlock taskDescriptionContainer"><span class="taskDescriptionValue">' + taskData.task_description + '</span></div>';
 
             // Отображение даты выполнения
             var dateTerm = new Date(taskData.date_term);
-            jsonBlock.innerHTML += '<div class="detailBlock taskDateContainer"><strong class="taskLabel">Дата выполнения:</strong><span class="taskValue">' + dateTerm.toLocaleDateString() + '</span></div>';
+            jsonBlock.innerHTML += '<div class="detailBlock taskDateContainer"><img class="iconLabel" src="static/date.svg" alt=""><span class="taskDateValue">' + dateTerm.toLocaleDateString() + '</span></div>';
 
             // Отображение приоритета
             var priorityMapping = {
@@ -38,21 +38,23 @@
                 'ordinary': 'Обычный',
                 'urgent': 'Срочный'
             };
-            jsonBlock.innerHTML += '<div class="detailBlock taskPriorityContainer"><strong class="taskLabel">Приоритет:</strong><span class="taskValue">' + priorityMapping[taskData.task_priority] + '</span></div>';
-
-            // Отображение статуса уведомлений
-            jsonBlock.innerHTML += '<div class="detailBlock taskStatusContainer"><strong class="taskLabel">Уведомления:</strong><span class="taskValue">' +
-                (taskData.notification ? '<span class="notificationEnabled">Включены</span>' : '<span class="notificationDisabled">Выключены</span>') +
-                '</span></div>';
+            var priorityClassMapping = {
+                'average': 'average-css',
+                'ordinary': 'ordinary-css',
+                'urgent': 'urgent-css'
+            };
+            jsonBlock.innerHTML += '<div class="detailBlock taskPriorityContainer ' + priorityClassMapping[taskData.task_priority] + '"><span class="taskPriorityValue">' + priorityMapping[taskData.task_priority] + '</span></div>';
 
             // Если уведомления включены, отображать выбранное время уведомления
             if (taskData.notification) {
-                jsonBlock.innerHTML += '<div class="detailBlock dailyNotificationContainer"><strong class="taskLabel">Напомнить:</strong><span class="taskValue">в ' + taskData.notify_time + '</span></div>';
+                jsonBlock.innerHTML += '<div class="detailBlock dailyNotificationContainer"><img class="iconLabel" src="static/time.svg" alt=""><span class="taskNotificationValue">Напомнить в ' + taskData.notify_time + '</span></div>';
+            } else {
+                jsonBlock.innerHTML += '<div class="detailBlock dailyNotificationContainer"><img class="iconLabel" src="static/time.svg" alt=""><span class="taskNotificationValue">Без напоминаний</span></div>';
             }
 
             // Добавление кнопки "Отметить как выполнено" с обработчиком события
             var deleteButton = document.createElement('button');
-            deleteButton.textContent = 'Отметить как выполнено';
+            deleteButton.textContent = 'Выполнить';
             deleteButton.className = 'deleteButton';
             deleteButton.addEventListener('click', function() {
                 deleteTask(index);
