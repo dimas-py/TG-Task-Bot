@@ -45,16 +45,6 @@ if (counter_task_name_length == 30) {
 }
 
 
-let checkbox = document.querySelector('.checkbox-inp');
-let notifications = document.querySelector('.notifications');
-
-checkbox.addEventListener('change', function () {
-if (checkbox.checked) {
-    notifications.classList.add('show');
-} else {
-    notifications.classList.remove('show');
-}
-});
 
 document.addEventListener('DOMContentLoaded', function () {
 let radioButtons = document.querySelectorAll('.radio-priority input[type="radio"]');
@@ -74,4 +64,32 @@ radioButton.addEventListener('change', function () {
     }
 });
 });
+});
+
+
+
+document.addEventListener('input', function(event) {
+    if (event.target.tagName.toLowerCase() === 'textarea') {
+        adjustTextareaHeight(event.target);
+    }
+});
+
+function adjustTextareaHeight(textarea) {
+    textarea.style.height = 'auto';
+    textarea.style.height = (textarea.scrollHeight) + 'px';
+}
+
+
+
+document.addEventListener('DOMContentLoaded', function () {
+  var checkbox = document.getElementById('checkbox');
+  var notificationsDiv = document.querySelector('.notifications-div');
+
+  checkbox.addEventListener('change', function () {
+    if (checkbox.checked) {
+      notificationsDiv.style.maxHeight = '60px';
+    } else {
+      notificationsDiv.style.maxHeight = '0';
+    }
+  });
 });

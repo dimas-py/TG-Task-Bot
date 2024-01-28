@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link type="text/css" href="{{ url_for('static', filename='style.css')}}" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <title>Document</title>
 </head>
 <body>
@@ -14,14 +15,14 @@
 
             <div class="task-topic">Создание задачи</div>
             <div class="input-box">
-                <input maxlength="30" class="input-box name-task validate-input" type="text" name="name-task-id" id="name-task-id" placeholder="Наименование задачи..." required>
+                <input maxlength="30" class="name-task validate-input" type="text" name="name-task-id" id="name-task-id" placeholder="Наименование задачи..." required>
                 <div class="counter-name">
                     <span class="current-name">0</span>&nbsp;/
                     <span class="total">30</span>
                 </div>
             </div>
             <div class="input-box task-box">
-                <textarea maxlength="250" class="task-box-text validate-input" name="taskDescription" id="taskDescription" cols="30" rows="10" placeholder="Описание задачи..." required></textarea>
+                <textarea maxlength="250" class="task-box-text validate-input" name="taskDescription" id="taskDescription" rows="1" placeholder="Описание задачи..." required></textarea>
                 <div class="counter-task-box">
                     <span class="current">0</span>&nbsp;/
                     <span class="total">250</span>
@@ -39,23 +40,22 @@
                     <input type="radio" name="prority" id="urgent" required><label for="urgent" class="priority-description">Срочный</label>
                 </div>
             </div>
-            <div class="input-box notifications">
-                <div class="notify-div">
-                    <label class="checkbox" for="checkbox">
-                        <input class="checkbox-inp" type="checkbox" name="notification" id="checkbox">
-                        <span class="checkbox-inner">Напомнить:</span>
-                    </label>
-                </div>
-                <div class="not-id">
-                    <div class="notifications-div">
 
-                        <label for="once-time" class="once-date-description">В запланированный день в:</label>
-                        <input class="times" type="time" name="once" id="once-time">
-                        <label for="once-time" class="once-time-msk-description">мск</label>
-                    </div>
+
+
+            <div class="input-box notifications">
+                <div class="check">
+                    <div class="check-text">Напомнить:</div>
+                   <div class="form-switch">
+                        <input class="form-check-input custom-checkbox" type="checkbox" name="notification" id="checkbox">
+                   </div>
+                </div>
+                <div class="notifications-div">
+                    <label for="once-time" class="once-date-description">В запланированный день в:</label>
+                    <input class="times" type="time" name="once" id="once-time">
                 </div>
             </div>
-            <div class="input-box button-submit">
+            <div class="button-submit">
                 <button class="btn-submit" id="button" type="submit">Создать задачу</button>
             </div>
         </form>
