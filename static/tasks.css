@@ -24,8 +24,8 @@ body {
 /* Стилизация для каждого элемента JSON-объекта */
 
 .taskNameContainer {
-    padding-top: 15px;
-    padding-bottom: 5px;
+    padding-top: 20px;
+    padding-bottom: 10px;
     word-wrap: break-word;
     width: 100%;
     box-sizing: border-box;
@@ -111,8 +111,8 @@ body {
 
 .taskPriorityContainer {
     position: absolute;
-    right: 5px;
-    top: 5px;
+    right: 10px;
+    top: 10px;
 }
 
 .ordinary-css {

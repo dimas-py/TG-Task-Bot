@@ -25,11 +25,11 @@
             var jsonBlock = document.createElement('div');
             jsonBlock.className = 'jsonBlock'; // Общий класс для всех элементов JSON
 
-            // Отображение названия задачи
-            jsonBlock.innerHTML += '<div class="detailBlock taskNameContainer"><strong class="taskLabel">Название задачи:</strong><span class="taskValue">' + taskData.task_name + '</span></div>';
+           // Отображение названия задачи
+            jsonBlock.innerHTML += '<div class="detailBlock taskNameContainer"><span class="taskNameValue">«' + taskData.task_name + '»</span></div>';
 
             // Отображение описания задачи
-            jsonBlock.innerHTML += '<div class="detailBlock taskDescriptionContainer"><strong class="taskLabel">Описание задачи:</strong><span class="taskValue">' + taskData.task_description + '</span></div>';
+            jsonBlock.innerHTML += '<div class="detailBlock taskDescriptionContainer"><span class="taskDescriptionValue">' + taskData.task_description + '</span></div>';
 
             container.appendChild(jsonBlock);
         }
