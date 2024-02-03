@@ -1,13 +1,16 @@
+import os
+from dotenv import load_dotenv
 import asyncio
 from aiogram import Bot, Dispatcher
 from aiogram.filters import CommandStart
 from aiogram.types import Message
 import time
-from bd_config import User,Task, Session
+from bd_config import User, Task, Session
 from keyboard import create_main_keyboard
 
-BOT_TOKEN = "6481132072:AAEcFRg5bH9eEgzUXHMdyzOkdTHClDAqrfw"
-FLASK_URL = 'https://5212-94-231-133-134.ngrok-free.app'
+load_dotenv()
+BOT_TOKEN = os.getenv("TOKEN")
+FLASK_URL = 'https://74fc-94-231-133-134.ngrok-free.app'
 bot = Bot(BOT_TOKEN, parse_mode="HTML")
 dp = Dispatcher()
 

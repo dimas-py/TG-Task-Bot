@@ -1,2 +1,6 @@
 /venv/
 /.idea/
+.env
+Dockerfile
+docker-compose.yml
+bot-start.sh

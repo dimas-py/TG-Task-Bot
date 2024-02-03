@@ -1,7 +1,15 @@
+import os
+from dotenv import load_dotenv
 from sqlalchemy import create_engine, ForeignKey, String, BigInteger, Date, Time, Boolean
 from sqlalchemy.orm import DeclarativeBase, sessionmaker, Mapped, mapped_column
 
-engine = create_engine('mysql+mysqlconnector://root:root@localhost:3306/tgbot', echo=True)
+load_dotenv()
+engine = create_engine(f'mysql+mysqlconnector://{os.getenv("MYSQL_USER")}:'
+                       f'{os.getenv("MYSQL_PASSWORD")}@127.0.0.1:'
+                       f'3306/{os.getenv("MYSQL_DATABASE")}', echo=True)
+# engine = create_engine(f'mysql+mysqlconnector://{os.getenv("MYSQL_USER")}:'
+#                        f'{os.getenv("MYSQL_PASSWORD")}@localhost:'
+#                        f'3306/{os.getenv("MYSQL_DATABASE")}', echo=True)
 Session = sessionmaker(bind=engine)
 
 
