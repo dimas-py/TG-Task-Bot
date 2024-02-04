@@ -13,8 +13,7 @@ from keyboard import create_main_keyboard
 moscow_timezone = pytz.timezone('Europe/Moscow')
 load_dotenv()
 BOT_TOKEN = os.getenv("TOKEN")
-# FLASK_URL = 'https://tresttest.site'
-FLASK_URL = 'https://0d1e-94-231-133-134.ngrok-free.app'
+FLASK_URL = 'https://tresttest.site'
 bot = Bot(BOT_TOKEN, parse_mode="HTML")
 dp = Dispatcher()
 
