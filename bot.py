@@ -1,16 +1,20 @@
 import os
-from dotenv import load_dotenv
 import asyncio
+import datetime
+import pytz
+
+from dotenv import load_dotenv
 from aiogram import Bot, Dispatcher
 from aiogram.filters import CommandStart
 from aiogram.types import Message
-import time
 from bd_config import User, Task, Session
 from keyboard import create_main_keyboard
 
+moscow_timezone = pytz.timezone('Europe/Moscow')
 load_dotenv()
 BOT_TOKEN = os.getenv("TOKEN")
-FLASK_URL = 'https://tresttest.site'
+# FLASK_URL = 'https://tresttest.site'
+FLASK_URL = 'https://0d1e-94-231-133-134.ngrok-free.app'
 bot = Bot(BOT_TOKEN, parse_mode="HTML")
 dp = Dispatcher()
 
@@ -63,7 +67,7 @@ async def schedule_notifications():
         await asyncio.sleep(10)  # Проверяем каждые 10 секунд
 
         # Получаем текущую дату и время
-        current_datetime = time.strftime('%Y-%m-%d %H:%M:%S')
+        current_datetime = datetime.datetime.now(moscow_timezone).strftime('%Y-%m-%d %H:%M:%S')
 
         # Получаем задачи, у которых дата и время совпадают с текущим моментом
         tasks_to_notify = get_tasks_to_notify(current_datetime)
