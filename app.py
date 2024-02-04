@@ -156,6 +156,5 @@ def clear_done_task():
         return jsonify({'status': 'error', 'error': 'Invalid request'})
 
 
-
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(host='0.0.0.0', debug=True)

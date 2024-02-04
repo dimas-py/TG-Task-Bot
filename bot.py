@@ -10,7 +10,7 @@ from keyboard import create_main_keyboard
 
 load_dotenv()
 BOT_TOKEN = os.getenv("TOKEN")
-FLASK_URL = 'https://74fc-94-231-133-134.ngrok-free.app'
+FLASK_URL = 'https://d414-94-231-133-134.ngrok-free.app'
 bot = Bot(BOT_TOKEN, parse_mode="HTML")
 dp = Dispatcher()
 

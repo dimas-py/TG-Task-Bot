@@ -4,9 +4,9 @@ from sqlalchemy import create_engine, ForeignKey, String, BigInteger, Date, Time
 from sqlalchemy.orm import DeclarativeBase, sessionmaker, Mapped, mapped_column
 
 load_dotenv()
-engine = create_engine(f'mysql+mysqlconnector://{os.getenv("MYSQL_USER")}:'
-                       f'{os.getenv("MYSQL_PASSWORD")}@127.0.0.1:'
-                       f'3306/{os.getenv("MYSQL_DATABASE")}', echo=True)
+engine = create_engine(f'mysql+mysqlconnector://test:'
+                       f'qwerty12345@80.78.242.162:'
+                       f'3306/tgbot', echo=True)
 # engine = create_engine(f'mysql+mysqlconnector://{os.getenv("MYSQL_USER")}:'
 #                        f'{os.getenv("MYSQL_PASSWORD")}@localhost:'
 #                        f'3306/{os.getenv("MYSQL_DATABASE")}', echo=True)
