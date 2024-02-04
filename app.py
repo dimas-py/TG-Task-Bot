@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, session, jsonify
 from bd_config import Task, Session, DoneTask
 from flask_cors import CORS
 
+
 app = Flask(__name__)
 CORS(app)
 app.secret_key = 'secret_key'  # не забыть поменять на более сложный
