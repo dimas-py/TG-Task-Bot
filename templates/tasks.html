@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Web Page</title>
+    <link type="text/css" href="{{ url_for('static', filename='tasks.css')}}" rel="stylesheet" />
+</head>
+<body>
+    <div id="jsonContainer" data-tasks='{{ tasks_json | tojson | safe }}'></div>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <script>
+        let tg = window.Telegram.WebApp; //получаем объект webapp телеграмма
+        tg.expand(); //расширяем на все окно
+
+        // Извлекаем JSON-данные из атрибута data-tasks
+        var tasksData = JSON.parse(document.getElementById('jsonContainer').getAttribute('data-tasks'));
+
+        // Функция для создания блока и добавления его на страницу
+        function addJsonBlock(taskData, index) {
+            var container = document.getElementById('jsonContainer');
+            var jsonBlock = document.createElement('div');
+            jsonBlock.className = 'jsonBlock'; // Общий класс для всех элементов JSON
+
+            // Отображение названия задачи
+            jsonBlock.innerHTML += '<div class="detailBlock taskNameContainer"><span class="taskNameValue">«' + taskData.task_name + '»</span></div>';
+
+            // Отображение описания задачи
+            jsonBlock.innerHTML += '<div class="detailBlock taskDescriptionContainer"><span class="taskDescriptionValue">' + taskData.task_description + '</span></div>';
+
+            // Отображение даты выполнения
+            var dateTerm = new Date(taskData.date_term);
+            jsonBlock.innerHTML += '<div class="detailBlock taskDateContainer"><img class="iconLabel" src="static/date.svg" alt=""><span class="taskDateValue">' + dateTerm.toLocaleDateString() + '</span></div>';
+
+            // Отображение приоритета
+            var priorityMapping = {
+                'average': 'Средний',
+                'ordinary': 'Обычный',
+                'urgent': 'Срочный'
+            };
+            var priorityClassMapping = {
+                'average': 'average-css',
+                'ordinary': 'ordinary-css',
+                'urgent': 'urgent-css'
+            };
+            jsonBlock.innerHTML += '<div class="detailBlock taskPriorityContainer ' + priorityClassMapping[taskData.task_priority] + '"><span class="taskPriorityValue">' + priorityMapping[taskData.task_priority] + '</span></div>';
+
+            // Если уведомления включены, отображать выбранное время уведомления
+            if (taskData.notification) {
+                jsonBlock.innerHTML += '<div class="detailBlock dailyNotificationContainer"><img class="iconLabel" src="static/time.svg" alt=""><span class="taskNotificationValue">Напомнить в ' + taskData.notify_time + '</span></div>';
+            } else {
+                jsonBlock.innerHTML += '<div class="detailBlock dailyNotificationContainer"><img class="iconLabel" src="static/time.svg" alt=""><span class="taskNotificationValue">Без напоминаний</span></div>';
+            }
+
+            // Добавление кнопки "Отметить как выполнено" с обработчиком события
+            var deleteButton = document.createElement('button');
+            deleteButton.textContent = 'Выполнить';
+            deleteButton.className = 'deleteButton';
+            deleteButton.addEventListener('click', function() {
+                deleteTask(index);
+            });
+            jsonBlock.appendChild(deleteButton);
+
+            container.appendChild(jsonBlock);
+        }
+
+        // Функция удаления задачи
+        function deleteTask(index) {
+            var deletedTask = tasksData[index];
+
+            fetch('/done_task', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ deletedTask: deletedTask }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    console.log('Deleted Task:', deletedTask);
+
+                    // Обновляем массив tasksData, удаляя удаленную задачу
+                    tasksData.splice(index, 1);
+
+                    updateView();  // Обновляем отображение после удаления
+                } else {
+                    console.error('Failed to delete task:', data.error);
+                }
+            })
+            .catch(error => console.error('Error:', error));
+        }
+
+        // Обновление инфы на странице после удаления задачи
+         function updateView() {
+            var container = document.getElementById('jsonContainer');
+            container.innerHTML = '';
+
+            if (tasksData.length === 0) {
+                var noTasksText = document.createElement('p');
+                noTasksText.textContent = 'Нет актуальных задач';
+                noTasksText.className = 'noTasksText'; // Добавьте класс для стилизации в CSS
+                container.appendChild(noTasksText);
+            } else {
+                tasksData.forEach(addJsonBlock);
+            }
+        }
+
+        updateView();
+    </script>
+</body>
+</html>

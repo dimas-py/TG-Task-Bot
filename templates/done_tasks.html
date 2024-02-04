@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Web Page</title>
+    <link type="text/css" href="{{ url_for('static', filename='done_tasks.css')}}" rel="stylesheet" />
+</head>
+<body>
+    <div id="jsonContainer" data-tasks='{{ tasks_json | tojson | safe }}'></div>
+    <button id="clearButton" class="stickyButton" onclick="clearTasks()">Очистить</button>
+
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <script>
+        let tg = window.Telegram.WebApp; //получаем объект webapp телеграмма
+        tg.expand(); //расширяем на все окно
+
+        // Извлекаем JSON-данные из атрибута data-tasks
+        var tasksData = JSON.parse(document.getElementById('jsonContainer').getAttribute('data-tasks'));
+        var clearButton = document.getElementById('clearButton');
+
+        // Функция для создания блока и добавления его на страницу
+        function addJsonBlock(taskData) {
+            var container = document.getElementById('jsonContainer');
+            var jsonBlock = document.createElement('div');
+            jsonBlock.className = 'jsonBlock'; // Общий класс для всех элементов JSON
+
+           // Отображение названия задачи
+            jsonBlock.innerHTML += '<div class="detailBlock taskNameContainer"><span class="taskNameValue">«' + taskData.task_name + '»</span></div>';
+
+            // Отображение описания задачи
+            jsonBlock.innerHTML += '<div class="detailBlock taskDescriptionContainer"><span class="taskDescriptionValue">' + taskData.task_description + '</span></div>';
+
+            container.appendChild(jsonBlock);
+        }
+
+        function clearTasks() {
+            var jsonContainer = document.getElementById('jsonContainer');
+            var tasksData = JSON.parse(jsonContainer.getAttribute('data-tasks'));
+
+            fetch('/clear_done_task', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ cleared: true, deletedTasks: tasksData }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    console.log('Cleared Tasks:', data.deletedTasks);
+                    jsonContainer.innerHTML = '';
+                    document.getElementById('clearButton').style.display = 'none';
+                    updateView([]);
+                } else {
+                    console.error('Failed to clear tasks:', data.error);
+                }
+            })
+            .catch(error => console.error('Error:', error));
+        }
+
+        function updateView(tasksData) {
+            var container = document.getElementById('jsonContainer');
+            container.innerHTML = '';
+
+            if (tasksData.length === 0) {
+                var noTasksText = document.createElement('p');
+                noTasksText.textContent = 'Нет выполненных задач';
+                noTasksText.className = 'noTasksText'; // Добавьте класс для стилизации в CSS
+                container.appendChild(noTasksText);
+
+                // Скрываем кнопку, если нет задач
+                clearButton.style.display = 'none';
+            } else {
+                tasksData.forEach(addJsonBlock);
+                // Показываем кнопку, если есть задачи
+                clearButton.style.display = 'block';
+            }
+        }
+
+        // Первоначальное обновление представления
+        updateView(tasksData);
+    </script>
+</body>
+</html>

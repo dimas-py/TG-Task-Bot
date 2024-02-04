@@ -1,234 +1,164 @@
-
 body {
-    font-style: normal;
-    line-height: normal;
-    background-color: #0F1022;
-    color: white;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-html, body {
-    height: 100%;
-    margin: 0;
-}
-
-
-.container {
-    display: flex;
-    justify-content: center;
-    border-radius: 8px;
-    background: linear-gradient(161deg, #383745 0%, #161525 73.97%, #161525 73.97%);
-    width: 100%;
-    height: 100%;
-}
-
-.container-forms {
-    margin: 20px 20px 20px 20px;
-    width: 100%;
+    background: #485563;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #29323c, #485563);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #29323c, #485563); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
 
 .task-topic {
     display: flex;
     justify-content: center;
-    font-size: 32px;
-    margin-bottom: 20px;
+    color: white;
+    font-size: 34px;
+    margin-top: 20px;
+    margin-bottom: 10px;
 }
 
 .input-box {
-    display: block;
-    justify-content: center;
-    margin-bottom: 20px;
+    font-size: 18px;
+    font-weight: bold;
     border-radius: 8px;
-    width: 100%;
-    background-color: #5A5A64;
-}
-
-
-::placeholder {
-    color: #C8C8D2;
-    font-size: 22px;
+    background: white;
+    border: 2px solid #7784ee;
+    margin: 0 15px;
+    margin-bottom: 20px;
+    padding: 10px;
 }
 
 .name-task {
-    margin: 0 auto;
-    height: 64px;
-    border: none;
+    font-size: 20px;
     outline:none;
-    color: white;
+    border: none;
+    border-radius: 8px;
     box-sizing: border-box;
-    padding-left: 10px;
     padding-right: 10px;
+    width: 100%;
 }
-
 
 .task-box-text {
-    width: 100%;
-    border-radius: 8px;
-    background: none;
-    border: none;
+    font-size: 20px;
     outline:none;
-    display: flex;
-    resize: none;
-    padding: 0;
-    height: 64px;
-    color: white;
+    border: none;
+    border-radius: 8px;
     box-sizing: border-box;
-    padding-top: 10px;
-    padding-left: 10px;
+    padding-right: 10px;
+    width: 100%;
+    resize: none;
 }
-
 
 .counter-task-box {
-    padding-left: 10px;
+    padding-left: 5px;
     font-size: 14px;
     color: #C8C8D2;
 }
-
-
 
 .counter-name {
-    padding-left: 10px;
+    padding-left: 5px;
     font-size: 14px;
     color: #C8C8D2;
-}
-
-
-.task-date {
-    display: flex;
-    justify-content: space-between;
-    height: 64px;
-    font-size: 22px;
-}
-
-
-::-webkit-calendar-picker-indicator {
-    filter: invert(1);
-    margin: 0px;
-}
-
-
-
-.date-description {
-    display: flex;
-    align-items: center;
-    padding-left: 15px;;
 }
 
 .date-style {
     background: none;
     border: none;
     outline: none;
-    padding-right: 5px;
     color: orange;
     font-size: 16px;
 }
 
+input[type="date"]::-webkit-calendar-picker-indicator {
+    color: rgba(0, 0, 0, 0);
+    opacity: 1;
+    display: block;
+    background: url("date.svg");
+    width: 20px;
+    height: 20px;
+    border-width: thin;
+}
+
 .priority-task {
-    height: 90px;
     background-image: url("star.svg");
     background-repeat: no-repeat;
     background-position: right top;
-    background-size: 1.150rem 1.150rem;
-    font-size: 22px;
+    background-size: 1.5rem 1.5rem;
 }
 
-.prority-topic {
-    display: flex;
-    justify-content: center;
-    padding-top: 5px;
+.name-task {
+    background-image: url("star.svg");
+    background-repeat: no-repeat;
+    background-position: right top;
+    background-size: 1.5rem 1.5rem;
 }
 
 .radio-priority {
     display: flex;
-    justify-content: space-between;
-    margin-top: 30px;
-    padding: 0 7px ;
+    justify-content: center;
+    padding-top: 10px;
 }
 
-.priority-description {
-    font-size: 19px;
-    margin-left: -20px;
-    margin-top: 3px;
+.radio-priority input[type="radio"] {
+    display: none;
+}
 
+.radio-priority label {
+    font-family: Poppins;
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 20px;
+    letter-spacing: 0.5px;
+    padding: 7px;
+    border-radius: 8px;
+    display: inline-flex;
+    align-items: center;
+    text-align: center;
+    border: 0.5px solid #808080;
+    color: #808080;
+    margin: 0 15px;
+}
+
+/* Добавим стиль для сброса стандартных стилей активного состояния на мобильных устройствах */
+@media only screen and (max-width: 767px) {
+    .radio-priority label:active {
+        -webkit-tap-highlight-color: transparent;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+    }
+}
+
+#ordinary:checked + label {
+    border-color: #08A0F7;
+    color: #08A0F7;
+    background: #E1F2FC;
+}
+
+#average:checked + label {
+    border-color: #E18109;
+    color: #E18109;
+    background: #FFF8EF;
+}
+
+#urgent:checked + label {
+    border-color: #F85640;
+    color: #F85640;
+    background: #FFF8F8;
 }
 
 
-.checkbox {
-    display: inline-block;
-}
-
-.checkbox-inp {
-    position: absolute;
-    opacity: 0;
-    width: 0;
-    height: 0;
-    appearance: none;
-}
-
-.checkbox-inner {
-    display: inline-block;
-    position: relative;
-    font-size: 22px;
-    padding: 8px;
-    margin-left: 5px;
-}
-
-.checkbox-inner::before {
-    display: block;
-    content: "";
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 40px;
-    height: 18px;
-    border-radius: 20px;
-    background-color: red;
-    margin-top: 12px;
-    margin-left: 145px;
-    transition: background-color .4s;
-}
-
-
-.checkbox-inner::after {
-    display: block;
-    content: "";
-    position: absolute;
-    width: 16px;
-    height: 16px;
-    border-radius: 15px;
-    background-color: white;
-    margin-left: 136px;
-    margin-top: -21.5px;
-    left: 10px;
-    transition: background-color .4s , left .4s;
-}
-
-.checkbox-inp:checked + .checkbox-inner::before {
-    background-color: #13CE66
-}
-
-.checkbox-inp:checked + .checkbox-inner::after {
-    background-color: white;
-    left: 30px;
-}
-
-.notifications {
-    flex-direction: column;
+.check {
+    display: flex;
     align-items: flex-start;
-    height: 42px;
-    width: 100%;
-    overflow: hidden;
-    transition: height 0.5s ease;
 }
 
-.notifications.show {
-    height: 120px;
+.check-text {
+    padding-right: 10px;
 }
 
 .notifications-div {
-    margin-bottom: 20px;
-    font-size: 22px;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.5s ease-out; /* Изменено на max-height */
 }
 
 .times {
@@ -240,36 +170,36 @@ html, body {
 }
 
 .button-submit {
-    height: 50px;
-    background: #373644
+    display: flex;
+    justify-content: center;
+    height: 60px;
+    width: 100%;
 }
 
 .btn-submit {
+    font-size: 25px;
+    font-weight: bold;
+    color: #13854E;
+    border: 0.5px solid #34A770;
+    background: #DCF3EB;
+    border-radius: 8px;
+    box-sizing: border-box;
     width: 100%;
     height: 100%;
-    background: none;
-    border: none;
-    color: white;
-    font-size: 26px;
+    margin: 0 15px;
 }
 
 .btn-submit:active {
     transform: scale(0.96);
 }
 
-
-
 .validate-input:invalid,
 .validate-input:valid {
   background-image: url("star.svg");
   background-repeat: no-repeat;
   background-position: right top;
-  background-size: 1.150rem 1.150rem;
+  background-size: 1.5rem 1.5rem;
 }
 .validate-input:valid {
   background-image: none;
-}
-
-input[type='radio'] {
-    accent-color: #13CE66;
 }

@@ -1,7 +1,15 @@
-from sqlalchemy import create_engine, String, BigInteger
+import os
+from dotenv import load_dotenv
+from sqlalchemy import create_engine, ForeignKey, String, BigInteger, Date, Time, Boolean
 from sqlalchemy.orm import DeclarativeBase, sessionmaker, Mapped, mapped_column
 
-engine = create_engine('mysql+mysqlconnector://root:root@localhost:3306/test', echo=True)
+load_dotenv()
+engine = create_engine(f'mysql+mysqlconnector://test:'
+                       f'qwerty12345@80.78.242.162:'
+                       f'3306/tgbot', echo=True)
+# engine = create_engine(f'mysql+mysqlconnector://{os.getenv("MYSQL_USER")}:'
+#                        f'{os.getenv("MYSQL_PASSWORD")}@localhost:'
+#                        f'3306/{os.getenv("MYSQL_DATABASE")}', echo=True)
 Session = sessionmaker(bind=engine)
 
 
@@ -21,9 +29,27 @@ class Task(Base):
     __tablename__ = 'tasks'
 
     id: Mapped[int] = mapped_column(primary_key=True)
+    task_user_id: Mapped[int] = mapped_column(BigInteger)
     task_name: Mapped[str] = mapped_column(String(255))
     task_description: Mapped[str] = mapped_column(String(255))
+    date_term: Mapped[Date] = mapped_column(Date)
+    task_priority: Mapped[str] = mapped_column(String(255))
+    notification: Mapped[bool] = mapped_column(Boolean)
+    notify_time: Mapped[Time] = mapped_column(Time, nullable=True)
+
+
+class DoneTask(Base):
+    __tablename__ = 'done_tasks'
+
+    id: Mapped[int] = mapped_column(primary_key=True)
     task_user_id: Mapped[int] = mapped_column(BigInteger)
+    task_name: Mapped[str] = mapped_column(String(255))
+    task_description: Mapped[str] = mapped_column(String(255))
+    date_term: Mapped[Date] = mapped_column(Date)
+    task_priority: Mapped[str] = mapped_column(String(255))
+    notification: Mapped[bool] = mapped_column(Boolean)
+    notify_time: Mapped[Time] = mapped_column(Time, nullable=True)
+
 
 
 # def create_tables():

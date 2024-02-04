@@ -1,0 +1,190 @@
+body {
+    background: #485563;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #29323c, #485563);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #29323c, #485563); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    margin: 20px
+}
+
+.jsonBlock {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    background-color: white;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    padding: 12px;
+}
+
+.detailBlock {
+    padding-left: 10px;
+}
+
+
+/* Стилизация для каждого элемента JSON-объекта */
+
+.taskNameContainer {
+    padding-top: 20px;
+    padding-bottom: 10px;
+    word-wrap: break-word;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.taskDescriptionContainer {
+    padding-left: 30px;
+    padding-right: 6px;
+    word-wrap: break-word;
+    width: 100%;
+    box-sizing: border-box;
+    display: inline-block;
+    position: relative;
+}
+
+.taskDescriptionContainer::before {
+    content: "";
+    box-sizing: border-box;
+    border-left: 4px solid #08A0F7;
+    height: 100%; /* Сделаем полосу высотой равной блоку */
+    position: absolute;
+    top: 0;
+    left: 20px; /* Отступ левой полосы от родительского блока */
+}
+
+.taskDateContainer {
+    position: relative;
+    padding-top: 15px;
+}
+
+.taskDateValue {
+    position: absolute;
+    padding-left: 10px;
+    padding-top: 5px;
+}
+
+.dailyNotificationContainer {
+    position: relative;
+    padding-top: 10px;
+}
+
+.taskNotificationValue{
+    position: absolute;
+    padding-left: 10px;
+    padding-top: 5px;
+    width: 200px;
+}
+
+.taskNameValue {
+    color: #0D101C;
+    font-size: 24px;
+}
+
+.taskDescriptionValue {
+    color: #6E7591;
+    font-size: 18px;
+}
+
+.iconLabel {
+    width: 24px;
+    height: 24px;
+}
+
+
+
+.onceNotificationContainer {
+    display: flex;
+    flex-direction: column;
+}
+
+.notificationEnabled {
+    color: #13CE66;
+}
+
+.noTasksText {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #FFFF00;
+    font-size: 30px;
+    height: 80vh;
+}
+
+.taskPriorityContainer {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+}
+
+.ordinary-css {
+    color: #08A0F7;
+    font-family: Poppins;
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 20px;
+    letter-spacing: 0.5px;
+    padding: 2px;
+    border: 0.5px solid #08A0F7;
+    border-radius: 20px;
+    background: #E1F2FC;
+    display: inline-flex;
+    align-items: center;
+    text-align: center;
+}
+
+.average-css {
+    color: #E18109;
+    font-family: Poppins;
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 20px;
+    letter-spacing: 0.5px;
+    padding: 2px;
+    border: 0.5px solid #FBA63C;
+    background: #FFF8EF;
+    border-radius: 20px;
+    display: inline-flex;
+    align-items: center;
+    text-align: center;
+}
+
+.urgent-css {
+    color: #F85640;
+    font-family: Poppins;
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 20px;
+    letter-spacing: 0.5px;
+    padding: 2px;
+    border: 0.5px solid #F85640;
+    background: #FFF8F8;
+    border-radius: 20px;
+    display: inline-flex;
+    align-items: center;
+    text-align: center;
+}
+
+.deleteButton {
+    position: absolute;
+    right: 5px;
+    bottom: 15px;
+    border: none;
+    border-radius: 40px;
+    background: #DCF3EB;
+    color: #13854E;
+    font-family: Poppins;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 20px; /* 153.846% */
+    letter-spacing: 0.5px;
+    background-image: url("done-button.svg");
+    background-repeat: no-repeat;
+    padding-left: 25px
+}
+
+.deleteButton:active {
+    transform: scale(0.96);
+}
