@@ -20,7 +20,7 @@
         function addJsonBlock(taskData, index) {
             var container = document.getElementById('jsonContainer');
             var jsonBlock = document.createElement('div');
-            jsonBlock.className = 'jsonBlock'; // Общий класс для всех элементов JSON
+            jsonBlock.className = 'jsonBlock';
 
             // Отображение названия задачи
             jsonBlock.innerHTML += '<div class="detailBlock taskNameContainer"><span class="taskNameValue">«' + taskData.task_name + '»</span></div>';
@@ -52,7 +52,7 @@
                 jsonBlock.innerHTML += '<div class="detailBlock dailyNotificationContainer"><img class="iconLabel" src="static/time.svg" alt=""><span class="taskNotificationValue">Без напоминаний</span></div>';
             }
 
-            // Добавление кнопки "Отметить как выполнено" с обработчиком события
+            // Добавление кнопки "Выполнить" с обработчиком события
             var deleteButton = document.createElement('button');
             deleteButton.textContent = 'Выполнить';
             deleteButton.className = 'deleteButton';
@@ -99,13 +99,12 @@
             if (tasksData.length === 0) {
                 var noTasksText = document.createElement('p');
                 noTasksText.textContent = 'Нет актуальных задач';
-                noTasksText.className = 'noTasksText'; // Добавьте класс для стилизации в CSS
+                noTasksText.className = 'noTasksText';
                 container.appendChild(noTasksText);
             } else {
                 tasksData.forEach(addJsonBlock);
             }
         }
-
         updateView();
     </script>
 </body>

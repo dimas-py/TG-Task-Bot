@@ -10,10 +10,12 @@ from aiogram.types import Message
 from bd_config import User, Task, Session
 from keyboard import create_main_keyboard
 
-moscow_timezone = pytz.timezone('Europe/Moscow')
-load_dotenv()
+
 BOT_TOKEN = os.getenv("TOKEN")
 FLASK_URL = 'https://tresttest.site'
+
+moscow_timezone = pytz.timezone('Europe/Moscow')
+load_dotenv()
 bot = Bot(BOT_TOKEN, parse_mode="HTML")
 dp = Dispatcher()
 
@@ -33,7 +35,6 @@ async def start(message: Message):
         await message.reply("Вы уже наш чел!👌")
 
     await message.answer(f'Привет, {first_name}!😘', reply_markup=main_kb)
-    # asyncio.create_task(test(message))
 
 
 @dp.message()
@@ -41,12 +42,12 @@ async def answer(message: Message):
     await message.answer(f"Задача <b>«{message.web_app_data.data}»</b> создана!")
 
 
-# Новая функция для отправки уведомлений
+# отправка уведомлений
 async def send_notification(user_id, message):
     await bot.send_message(user_id, message)
 
 
-# Новая функция для получения задач, которые нужно уведомить
+# получение задач, которые нужно уведомить
 def get_tasks_to_notify(current_datetime):
     session = Session()
     tasks_to_notify = (
@@ -60,15 +61,11 @@ def get_tasks_to_notify(current_datetime):
     return tasks_to_notify
 
 
-# Отправка уведомлений по расписанию - работает
+# отправка уведомлений по расписанию
 async def schedule_notifications():
     while True:
-        await asyncio.sleep(10)  # Проверяем каждые 10 секунд
-
-        # Получаем текущую дату и время
+        await asyncio.sleep(10)  # проверяем каждые 10 секунд
         current_datetime = datetime.datetime.now(moscow_timezone).strftime('%Y-%m-%d %H:%M:%S')
-
-        # Получаем задачи, у которых дата и время совпадают с текущим моментом
         tasks_to_notify = get_tasks_to_notify(current_datetime)
 
         # Отправляем уведомления
@@ -79,11 +76,12 @@ async def schedule_notifications():
                                     f'Вам нужно выполнить задачу <b>«{task_name}»</b>❗')
 
             await send_notification(user_id, notification_message)
+
             # Помечаем задачу как уведомленную, чтобы не отправлять ее снова
             mark_task_as_notified(task)
 
 
-# Функция для пометки задачи как уведомленной
+# пометка задачи как уведомленной
 def mark_task_as_notified(task):
     session = Session()
     task.notification = 0
@@ -92,7 +90,7 @@ def mark_task_as_notified(task):
     session.close()
 
 
-# Функция для проверки существования пользователя в базе данных
+# проверка существования пользователя в базе данных
 def user_exists(user_id):
     session = Session()
     user = session.query(User).filter_by(user_id=user_id).first()
@@ -100,7 +98,7 @@ def user_exists(user_id):
     return user is not None
 
 
-# Функция для сохранения пользователя в базе данных
+# сохранение пользователя в базе данных
 def save_user(user_id, first_name):
     session = Session()
     new_user = User(user_id=user_id, user_name=first_name)
@@ -113,7 +111,6 @@ async def main():
     asyncio.create_task(schedule_notifications())
     await bot.delete_webhook(drop_pending_updates=True)
     await dp.start_polling(bot)
-
 
 
 if __name__ == "__main__":

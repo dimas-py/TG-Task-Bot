@@ -1,6 +1,6 @@
 import os
 from dotenv import load_dotenv
-from sqlalchemy import create_engine, ForeignKey, String, BigInteger, Date, Time, Boolean
+from sqlalchemy import create_engine, String, BigInteger, Date, Time, Boolean
 from sqlalchemy.orm import DeclarativeBase, sessionmaker, Mapped, mapped_column
 
 load_dotenv()

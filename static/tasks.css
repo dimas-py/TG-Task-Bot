@@ -1,7 +1,7 @@
 body {
-    background: #485563;  /* fallback for old browsers */
-    background: -webkit-linear-gradient(to right, #29323c, #485563);  /* Chrome 10-25, Safari 5.1-6 */
-    background: linear-gradient(to right, #29323c, #485563); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    background: #485563;
+    background: -webkit-linear-gradient(to right, #29323c, #485563);
+    background: linear-gradient(to right, #29323c, #485563);
     margin: 20px
 }
 
@@ -19,9 +19,6 @@ body {
 .detailBlock {
     padding-left: 10px;
 }
-
-
-/* Стилизация для каждого элемента JSON-объекта */
 
 .taskNameContainer {
     padding-top: 20px;
@@ -45,10 +42,10 @@ body {
     content: "";
     box-sizing: border-box;
     border-left: 4px solid #08A0F7;
-    height: 100%; /* Сделаем полосу высотой равной блоку */
+    height: 100%;
     position: absolute;
     top: 0;
-    left: 20px; /* Отступ левой полосы от родительского блока */
+    left: 20px;
 }
 
 .taskDateContainer {
@@ -178,7 +175,7 @@ body {
     font-size: 16px;
     font-style: normal;
     font-weight: 600;
-    line-height: 20px; /* 153.846% */
+    line-height: 20px;
     letter-spacing: 0.5px;
     background-image: url("done-button.svg");
     background-repeat: no-repeat;

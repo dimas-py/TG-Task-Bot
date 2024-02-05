@@ -136,6 +136,7 @@ def done_task():
         return render_template("done_tasks.html", tasks_json=tasks_result)
 
 
+# Очищаем выполенные задачи
 @app.route('/clear_done_task', methods=['POST'])
 def clear_done_task():
     data = request.get_json()

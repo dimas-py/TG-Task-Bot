@@ -1,7 +1,7 @@
 body {
-    background: #485563;  /* fallback for old browsers */
-    background: -webkit-linear-gradient(to right, #29323c, #485563);  /* Chrome 10-25, Safari 5.1-6 */
-    background: linear-gradient(to right, #29323c, #485563); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    background: #485563;
+    background: -webkit-linear-gradient(to right, #29323c, #485563);
+    background: linear-gradient(to right, #29323c, #485563);
 }
 
 .task-topic {
@@ -116,7 +116,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     margin: 0 15px;
 }
 
-/* Добавим стиль для сброса стандартных стилей активного состояния на мобильных устройствах */
+
 @media only screen and (max-width: 767px) {
     .radio-priority label:active {
         -webkit-tap-highlight-color: transparent;
@@ -158,7 +158,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 .notifications-div {
   max-height: 0;
   overflow: hidden;
-  transition: max-height 0.5s ease-out; /* Изменено на max-height */
+  transition: max-height 0.5s ease-out;
 }
 
 .times {

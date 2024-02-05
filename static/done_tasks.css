@@ -1,7 +1,7 @@
 body {
-    background: #485563;  /* fallback for old browsers */
-    background: -webkit-linear-gradient(to right, #29323c, #485563);  /* Chrome 10-25, Safari 5.1-6 */
-    background: linear-gradient(to right, #29323c, #485563); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    background: #485563;
+    background: -webkit-linear-gradient(to right, #29323c, #485563);
+    background: linear-gradient(to right, #29323c, #485563);
     margin: 20px
 }
 
@@ -41,10 +41,10 @@ body {
     content: "";
     box-sizing: border-box;
     border-left: 4px solid #08A0F7;
-    height: 100%; /* Сделаем полосу высотой равной блоку */
+    height: 100%;
     position: absolute;
     top: 0;
-    left: 20px; /* Отступ левой полосы от родительского блока */
+    left: 20px;
 }
 
 .taskNameValue {
@@ -73,7 +73,7 @@ body {
     right: 10px;
     padding: 10px;
     cursor: pointer;
-    z-index: 1000; /* Поднимаем кнопку выше других элементов */
+    z-index: 1000;
     color: #13854E;
     border: 1px solid #34A770;
     background: #DCF3EB;
